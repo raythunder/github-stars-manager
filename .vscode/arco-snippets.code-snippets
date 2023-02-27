@@ -1,0 +1,203 @@
+{
+  // Place your openvod_admin_next 工作区 snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body and
+  // description. Add comma separated ids of the languages where the snippet is applicable in the scope field. If scope
+  // is left empty or omitted, the snippet gets applied to all languages. The prefix is what is
+  // used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+  // $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders.
+  // Placeholders with the same ids are connected.
+  // Example:
+  // "Print to console": {
+  // 	"scope": "javascript,typescript",
+  // 	"prefix": "log",
+  // 	"body": [
+  // 		"console.log('$1');",
+  // 		"$2"
+  // 	],
+  // 	"description": "Log output to console"
+  // }
+  "Loading": {
+    "prefix": "arco-loading",
+    "body": [
+      "<a-spin :loading=\"loading\"></a-spin>"
+    ],
+    "description": "Loading"
+  },
+  "Form": {
+    "prefix": "arco-form",
+    "body": [
+      "<a-form ref=\"formRef\" auto-label-width class=\"max-w-[70%] px-5 mx-auto\" layout=\"horizontal\" :model=\"form\">",
+      "</a-form>"
+    ],
+    "description": "Form"
+  },
+  "Form Instance": {
+    "prefix": "arco-form-instance",
+    "body": [
+      "const formRef = ref();"
+    ],
+    "description": "Form Instance"
+  },
+  "Form Reset": {
+    "prefix": "arco-form-reset",
+    "body": [
+      "formRef.value?.resetFields();"
+    ],
+    "description": "Form Reset"
+  },
+  "Form Label Props": {
+    "prefix": "arco-form-label-props",
+    "body": [
+      ":label-col-props=\"{ flex: '${1}' }\" :wrapper-col-props=\"{ flex: '1' }\""
+    ],
+    "description": "Form Label Props"
+  },
+  "Form Buttons": {
+    "prefix": "arco-form-buttons",
+    "body": [
+      "<a-form-item>",
+      "  <a-space>",
+      "    <a-button @click=\"handleReset\">Reset</a-button>",
+      "    <a-button html-type=\"button\">Submit</a-button>",
+      "  </a-space>",
+      "</a-form-item>"
+    ],
+    "description": "Form Buttons"
+  },
+  "Form Item": {
+    "prefix": "arco-form-item",
+    "body": [
+      "<a-form-item field=\"${1}\" label=\"${2}\" validate-trigger=\"blur\" :rules=\"[]\">",
+      "</a-form-item>"
+    ],
+    "description": "Form Item"
+  },
+  "Input": {
+    "prefix": "arco-input",
+    "body": [
+      "<a-input v-model=\"${3}\" allow-clear/>",
+    ],
+    "description": "Input"
+  },
+  "Textarea": {
+    "prefix": "arco-textarea",
+    "body": [
+      "<a-textarea v-model=\"${3}\" allow-clear/>",
+    ],
+    "description": "Textarea"
+  },
+  "Select": {
+    "prefix": "arco-select",
+    "body": [
+      "<a-select allow-clear v-model=\"val\" :trigger-props=\"{ autoFitPopupMinWidth: true }\">",
+      "  <a-option v-for=\"item in ${1}\" :key=\"${2}\" :value=\"${3}\">{{${4}}}</a-option>",
+      "</a-select>"
+    ],
+    "description": "Select"
+  },
+  "Modal Page": {
+    "prefix": "arco-modal",
+    "body": [
+      "<template>",
+      "  <a-modal title=\"${1}\" v-model:visible=\"visible\" @cancel=\"hide\" unmount-on-close> </a-modal>",
+      "</template>",
+      "",
+      "<script setup>",
+      "import { ref, defineExpose } from 'vue';",
+      "",
+      "const visible = ref(false);",
+      "const show = () => {",
+      "  visible.value = true;",
+      "};",
+      "",
+      "const hide = () => {",
+      "  visible.value = false;",
+      "};",
+      "",
+      "defineExpose({",
+      "  show,",
+      "});",
+      "</script>",
+      ""
+    ],
+    "description": "Modal Page"
+  },
+  "Form actions": {
+    "prefix": "vue3-form-actions",
+    "body": [
+      "const handleReset = () => {",
+      "  formRef.value?.resetFields();",
+      "};",
+      "",
+      "const handleSubmit = async () => {",
+      "  const res = await formRef.value?.validate();",
+      "",
+      "  if (res) {",
+      "    Object.keys(res).forEach((key) => {",
+      "      Notification.error({",
+      "        content: `${t(`form.${res[key].field}`)} - ${res[key].message}`,",
+      "        position: 'bottomRight',",
+      "      });",
+      "    });",
+      "",
+      "    return;",
+      "  }",
+      "",
+      "  fetch().then(() => {",
+      "    Notification.success({ content: t('form.success'), position: 'bottomRight' });",
+      "  });",
+      "};"
+    ],
+    "description": "Form actions"
+  },
+  "Notification": {
+    "scope": "javascript,typescript",
+    "prefix": "arco-notification",
+    "body": [
+      "Notification.success({ content: t('form.success'), position: 'bottomRight' });",
+    ],
+    "description": "Show Modal"
+  },
+  "Confirm": {
+    "prefix": "arco-confirm",
+    "body": [
+      "Modal.confirm({",
+      "  title: t('form.hint')",
+      "  content: `${t('form.confirmDelete')}?`",
+      "  onOk: () => {",
+      "  },",
+      "});"
+    ],
+    "description": "Confirm"
+  },
+  "Arco Table": {
+    "prefix": "arco-table",
+    "body": [
+      "<a-table",
+      "  :loading=\"loading\"",
+      "  :data=\"data\"",
+      "  :pagination=\"pagination\"",
+      "  @pageChange=\"pagination.current = $event\"",
+      ">",
+      "  <template #columns>",
+      "    <a-table-column title=\"\" data-index=\"\"> </a-table-column>",
+      "  </template>",
+      "</a-table>"
+    ],
+    "description": "Arco Table"
+  },
+  "Arco Table Column": {
+    "prefix": "arco-table-col",
+    "body": [
+      "<a-table-column title=\"$1\" data-index=\"$2\"></a-table-column>"
+    ],
+    "description": "Arco Table Column"
+  },
+  "Arco Table Column Template": {
+    "prefix": "arco-table-col-template",
+    "body": [
+      "<template #cell=\"{ record, index }\">",
+      "</template>"
+    ],
+    "description": "Arco Table Column Template"
+  }
+}

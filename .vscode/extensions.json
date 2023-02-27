@@ -1,0 +1,13 @@
+{
+  "recommendations": [
+    "Vue.volar",
+    "voorjaar.windicss-intellisense",
+    "formulahendry.auto-complete-tag",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "mrmlnc.vscode-less",
+    "lokalise.i18n-ally",
+    "mikestead.dotenv",
+    "bradlc.vscode-tailwindcss"
+  ]
+}
