@@ -1,4 +1,14 @@
 import axios from 'axios';
+import { useUserStore } from '@/store';
+
+function getApi() {
+  const userStore = useUserStore();
+  return userStore.octokit;
+}
+
+export function getUser() {
+  return getApi().request('GET /user');
+}
 
 export function login(data) {
   return axios.post('/login/auth', data);

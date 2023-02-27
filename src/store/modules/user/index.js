@@ -7,6 +7,7 @@ import {
 import { setToken, clearToken } from '@/utils/auth';
 import { removeRouteListener } from '@/utils/route-listener';
 import useAppStore from '../app';
+import { Octokit } from '@octokit-next/core';
 
 const useUserStore = defineStore('user', {
   state: () => ({
@@ -27,6 +28,7 @@ const useUserStore = defineStore('user', {
     accountId: undefined,
     certification: undefined,
     role: '',
+    octokit: null,
   }),
 
   getters: {
@@ -36,6 +38,10 @@ const useUserStore = defineStore('user', {
   },
 
   actions: {
+    init(token) {
+      const octokit = new Octokit({ auth: token });
+      this.octokit = octokit;
+    },
     switchRoles() {
       return new Promise((resolve) => {
         this.role = this.role === 'user' ? 'admin' : 'user';

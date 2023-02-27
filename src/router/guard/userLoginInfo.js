@@ -7,6 +7,11 @@ export default function setupUserLoginInfoGuard(router) {
   router.beforeEach(async (to, from, next) => {
     NProgress.start();
     const userStore = useUserStore();
+    console.log(
+      '%c [ isLogin() ]-11',
+      'font-size:13px; background:pink; color:#bf2c9f;',
+      isLogin()
+    );
     if (isLogin()) {
       if (userStore.role) {
         next();
@@ -17,7 +22,7 @@ export default function setupUserLoginInfoGuard(router) {
         } catch (error) {
           await userStore.logout();
           next({
-            name: 'login',
+            name: 'init',
             query: {
               redirect: to.name,
               ...to.query,
@@ -26,12 +31,12 @@ export default function setupUserLoginInfoGuard(router) {
         }
       }
     } else {
-      if (to.name === 'login') {
+      if (to.name === 'init') {
         next();
         return;
       }
       next({
-        name: 'login',
+        name: 'init',
         query: {
           redirect: to.name,
           ...to.query,

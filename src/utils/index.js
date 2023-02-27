@@ -1,3 +1,13 @@
+import Storage from 'vue-ls';
+
+const options = {
+  namespace: 'raythunder_github__', // key prefix
+  name: 'ls', // name variable Vue.[ls] or this.[$ls],
+  storage: 'local', // storage name session, local, memory
+};
+
+export const { ls } = Storage.useStorage(options);
+
 export const openWindow = (url, opts) => {
   const { target = '_blank', ...others } = opts || {};
   window.open(

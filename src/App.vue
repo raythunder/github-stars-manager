@@ -11,6 +11,9 @@
   import zhCN from '@arco-design/web-vue/es/locale/lang/zh-cn';
   import GlobalSetting from '@/components/global-setting/index.vue';
   import useLocale from '@/hooks/locale';
+  import { ls } from '@/utils';
+  import { useUserStore } from '@/store';
+  import { useRouter } from 'vue-router';
 
   const { currentLocale } = useLocale();
   const locale = computed(() => {
@@ -23,4 +26,11 @@
         return enUS;
     }
   });
+
+  const userStore = useUserStore();
+  const router = useRouter();
+  if (ls.get('token')) {
+    userStore.init(ls.get('token'));
+    router.push('/dashboard');
+  }
 </script>
