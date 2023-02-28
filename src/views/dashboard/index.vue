@@ -10,33 +10,20 @@
       </a>
     </div>
 
-    <div>{{ userInfo }}</div>
+    <div>{{ dataStore }}</div>
   </div>
 </template>
 
 <script setup>
-  import { useUserStore } from '@/store';
   import { getUser } from '@/api/user';
-
-  const userStore = useUserStore();
-  const octokit = computed(() => {
-    return userStore.octokit;
-  });
-
-  watch(
-    octokit,
-    (val) => {
-      if (!val) return;
-      console.log('octokit is exist');
-    },
-    { immediate: true }
-  );
+  import { useDataStore } from '@/store';
 
   const userInfo = ref({});
   getUser().then((res) => {
-    console.log(res);
     userInfo.value = res.data;
   });
+
+  const dataStore = useDataStore();
 </script>
 
 <style lang=""></style>

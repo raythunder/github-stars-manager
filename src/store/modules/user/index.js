@@ -8,6 +8,7 @@ import { setToken, clearToken } from '@/utils/auth';
 import { removeRouteListener } from '@/utils/route-listener';
 import useAppStore from '../app';
 import { Octokit } from '@octokit-next/core';
+import useDataStore from '../data';
 
 const useUserStore = defineStore('user', {
   state: () => ({
@@ -41,6 +42,9 @@ const useUserStore = defineStore('user', {
     init(token) {
       const octokit = new Octokit({ auth: token });
       this.octokit = octokit;
+
+      const dataStore = useDataStore();
+      dataStore.fetchGistData();
     },
     switchRoles() {
       return new Promise((resolve) => {
