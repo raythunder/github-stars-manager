@@ -8,19 +8,18 @@ export default function setupUserLoginInfoGuard(router) {
     NProgress.start();
     const userStore = useUserStore();
     console.log(
-      '%c [ isLogin() ]-11',
+      '%c [ userStore ]-10',
       'font-size:13px; background:pink; color:#bf2c9f;',
-      isLogin()
+      userStore
     );
     if (isLogin()) {
-      if (userStore.role) {
+      if (userStore.login) {
         next();
       } else {
         try {
           await userStore.info();
           next();
         } catch (error) {
-          await userStore.logout();
           next({
             name: 'init',
             query: {

@@ -1,12 +1,6 @@
-import { useUserStore } from '@/store';
 import { GIST_INFO } from '@/const';
 import http from 'axios';
 // https://docs.github.com/en/rest/gists/gists?apiVersion=2022-11-28
-
-function getApi() {
-  const userStore = useUserStore();
-  return userStore.octokit;
-}
 
 export const gistApi = {
   getList() {

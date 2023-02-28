@@ -3,6 +3,7 @@ import { gistApi } from '@/api/gists';
 
 import { GIST_INFO } from '@/const';
 import { ls } from '@/utils';
+import useStarStore from '../star';
 
 export default defineStore('data', {
   state: () => ({
@@ -14,6 +15,9 @@ export default defineStore('data', {
       const content = await fetchGistData();
 
       this.$patch(content);
+
+      const starStore = useStarStore();
+      starStore.fetchStaredList();
     },
   },
 });
