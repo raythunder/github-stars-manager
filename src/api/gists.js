@@ -22,4 +22,15 @@ export const gistApi = {
 
     return http.post('/gists', params);
   },
+  updateItem(id, data) {
+    const params = {
+      files: {
+        [GIST_INFO.name]: {
+          content: JSON.stringify(data),
+        },
+      },
+    };
+
+    return http.patch(`/gists/${id}`, params);
+  },
 };

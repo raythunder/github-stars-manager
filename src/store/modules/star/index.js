@@ -1,11 +1,30 @@
 import { defineStore } from 'pinia';
 import { starApi } from '@/api/star';
+import useDataStore from '../data';
 
 export default defineStore('star', {
   state: () => ({
     loading: false,
     staredRepos: [],
   }),
+  getters: {
+    tagedRepos() {
+      const dataStore = useDataStore();
+      const { tags } = dataStore;
+      const { staredRepos } = this;
+
+      return staredRepos.map((repo) => {
+        const _tags = tags
+          .filter((i) => i.repos.includes(repo.id))
+          .map((i) => i.name);
+
+        return {
+          ...repo,
+          _tags,
+        };
+      });
+    },
+  },
   actions: {
     async fetchStaredList() {
       this.loading = true;

@@ -43,6 +43,7 @@ specifiers:
   unocss: ^0.45.14
   unplugin-auto-import: ^0.12.0
   unplugin-vue-components: ^0.22.8
+  uuid: ^9.0.0
   vite: ^3.2.4
   vite-plugin-compression: ^0.5.1
   vite-plugin-eslint: ^1.8.1
@@ -70,6 +71,7 @@ dependencies:
   pinia: 2.0.30_vue@3.2.47
   query-string: 7.1.3
   tinymce: 5.10.7
+  uuid: 9.0.0
   vue: 3.2.47
   vue-echarts: 6.5.2_echarts@5.4.1+vue@3.2.47
   vue-i18n: 9.2.2_vue@3.2.47
@@ -6755,6 +6757,11 @@ packages:
     deprecated: Please upgrade  to version 7 or higher.  Older versions may use Math.random() in certain circumstances, which is known to be problematic.  See https://v8.dev/blog/math-random for details.
     hasBin: true
     dev: true
+
+  /uuid/9.0.0:
+    resolution: {integrity: sha512-MXcSTerfPa4uqyzStbRoTgt5XIe3x5+42+q1sDuy3R5MDk66URdLMOZe5aPX/SQd+kuYAh0FdP/pO28IkQyTeg==}
+    hasBin: true
+    dev: false
 
   /v8-compile-cache-lib/3.0.1:
     resolution: {integrity: sha512-wa7YjyUGfNZngI/vtK0UHAN+lgDCxBPCylVXGp0zu59Fz5aiGtNXaq3DhIov063MorB+VfufLh3JlF2KdTK3xg==}

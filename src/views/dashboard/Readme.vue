@@ -46,11 +46,6 @@
   };
 
   function handleClose() {
-    console.log(
-      '%c [ htmlData ]-52',
-      'font-size:13px; background:pink; color:#bf2c9f;',
-      htmlData
-    );
     htmlData.value = '';
   }
 

@@ -10,6 +10,13 @@ export default defineStore('data', {
     tags: [],
     updateTime: 0,
   }),
+
+  getters: {
+    tagNames() {
+      return this.tags.map((item) => item.name);
+    },
+  },
+
   actions: {
     async fetchGistData() {
       const content = await fetchGistData();
@@ -18,6 +25,21 @@ export default defineStore('data', {
 
       const starStore = useStarStore();
       starStore.fetchStaredList();
+    },
+
+    async updateTags(tags) {
+      this.tags = tags;
+      this.updateTime = Date.now();
+
+      ls.set('localContent', {
+        tags,
+        updateTime: this.updateTime,
+      });
+
+      return gistApi.updateItem(ls.get('gistId'), {
+        tags,
+        updateTime: this.updateTime,
+      });
     },
   },
 });
@@ -55,9 +77,7 @@ async function fetchGistData() {
       // 创建gist
       content = { updateTime: Date.now(), tags: [] };
 
-      const {
-        data: { id },
-      } = await gistApi.addItem(content);
+      const { id } = await gistApi.addItem(content);
       ls.set('gistId', id);
     }
   }
