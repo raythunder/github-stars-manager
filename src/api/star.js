@@ -11,11 +11,20 @@ export const starApi = {
   unStarRepo({ owner, repo }) {
     return http.delete(`/user/starred/${owner}/${repo}`);
   },
-  getReadme({ owner, repo }) {
-    return http.get(`/repos/${owner}/${repo}/readme`);
+  // https://docs.github.com/en/rest/branches/branches?apiVersion=2022-11-28
+  getBranches({ owner, repo }) {
+    return http.get(`/repos/${owner}/${repo}/branches`);
   },
+  // https://docs.github.com/en/rest/repos/contents?apiVersion=2022-11-28#get-a-repository-readme
+  getReadme({ owner, repo, branch }) {
+    const url = `/repos/${owner}/${repo}/readme`;
+    if (branch) {
+      return http.get(url, { params: { ref: branch } });
+    }
+    return http.get(url);
+  },
+  // https://docs.github.com/en/rest/markdown?apiVersion=2022-11-28#render-a-markdown-document
   renderReadme(text) {
-    // https://docs.github.com/zh/rest/markdown?apiVersion=2022-11-28#render-a-markdown-document
     return http.post(`/markdown`, {
       text,
       mode: 'markdown',

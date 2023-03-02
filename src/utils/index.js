@@ -27,4 +27,8 @@ export const regexUrl = new RegExp(
   'i'
 );
 
+export function to(promise) {
+  return promise.then((data) => [null, data]).catch((err) => [err]);
+}
+
 export default null;
