@@ -1,14 +1,18 @@
 import { defineStore } from 'pinia';
 import { gistApi } from '@/api/gists';
 
-import { GIST_INFO } from '@/const';
 import { ls } from '@/utils';
+import { GIST_INFO } from '@/const';
 import useStarStore from '../star';
 
 export default defineStore('data', {
   state: () => ({
     tags: [],
     updateTime: 0,
+    filter: {
+      isUntaged: false,
+      mode: 'or', // 'or' 'and'
+    },
   }),
 
   getters: {
@@ -40,6 +44,10 @@ export default defineStore('data', {
         tags,
         updateTime: this.updateTime,
       });
+    },
+
+    updateFilter(key, val) {
+      this.filter[key] = val;
     },
   },
 });

@@ -1,6 +1,7 @@
 <template>
   <a-drawer
-    width="80%"
+    height="95%"
+    placement="bottom"
     :visible="visible"
     unmount-on-close
     @cancel="visible = false"
@@ -8,10 +9,20 @@
     @close="handleClose"
   >
     <template #title> README.md </template>
-    <a-spin :loading="loading" class="w-full p-20 min-h-full">
-      <div class="flex items-center mb-20" v-if="branchList.length > 1">
-        <span class="flex-shrink-0">分支：</span>
+
+    <div class="text-center">
+      <a-spin v-if="loading" :loading="loading"> </a-spin>
+    </div>
+
+    <div class="max-w-896px p-20 mx-auto" v-if="!loading">
+      <div
+        class="flex items-center mb-20"
+        v-if="branchList.length > 1 && visible"
+      >
         <a-select v-model="branch" @change="getReadme">
+          <template #prefix>
+            <i class="text-#0969da i-mdi-source-branch"> </i>
+          </template>
           <a-option
             v-for="item in branchList"
             :key="item.name"
@@ -23,7 +34,16 @@
       </div>
 
       <div class="markdown-body" v-html="htmlData"> </div>
-    </a-spin>
+
+      <div class="text-center" v-if="!loading && !htmlData">
+        <a-tooltip position="bottom">
+          <template #content> 该分支没有README.md... </template>
+          <i
+            class="text-size-50 text-gray-200 i-ic-twotone-catching-pokemon"
+          ></i>
+        </a-tooltip>
+      </div>
+    </div>
   </a-drawer>
 </template>
 
@@ -37,6 +57,7 @@
   const htmlData = ref('');
 
   const branch = ref('');
+  const defaultBranch = ref('');
 
   let repo = null;
   const show = (data) => {
@@ -44,6 +65,7 @@
 
     visible.value = true;
     branch.value = repo.default_branch;
+    defaultBranch.value = repo.default_branch;
 
     getBranches();
     getReadme(branch.value);
@@ -52,6 +74,7 @@
   // 获取readme.md文件内容
   async function getReadme(branch) {
     loading.value = true;
+    htmlData.value = '';
 
     const [err, data] = await to(
       starApi.getReadme({
@@ -80,10 +103,21 @@
   // 获取分支信息
   const branchList = ref([]);
   async function getBranches() {
-    branchList.value = await starApi.getBranches({
+    const list = await starApi.getBranches({
       owner: repo.owner.login,
       repo: repo.name,
     });
+
+    const extraBranch = list.filter(
+      (item) => item.name !== repo.default_branch
+    );
+
+    const defaultBranch = list.find(
+      (item) => item.name === repo.default_branch
+    );
+
+    // 置顶默认分支
+    branchList.value = [defaultBranch, ...extraBranch];
   }
 
   // 用正则表达式替换超链接

@@ -10,11 +10,11 @@ export default defineStore('star', {
   getters: {
     tagedRepos() {
       const dataStore = useDataStore();
-      const { tags } = dataStore;
+      const { tags, filter } = dataStore;
       const { staredRepos } = this;
 
-      return staredRepos.map((repo) => {
-        const _tags = tags
+      let list = staredRepos.map((repo) => {
+        let _tags = tags
           .filter((i) => i.repos.includes(repo.id))
           .map((i) => i.name);
 
@@ -23,6 +23,12 @@ export default defineStore('star', {
           _tags,
         };
       });
+
+      if (filter.isUntaged) {
+        list = list.filter((i) => i._tags.length === 0);
+      }
+
+      return list;
     },
   },
   actions: {
