@@ -13,6 +13,7 @@ export default defineStore('data', {
       isUntaged: false,
       mode: 'or', // 'or' 'and'
       tags: [],
+      language: '',
     },
   }),
 

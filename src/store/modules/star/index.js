@@ -9,6 +9,13 @@ export default defineStore('star', {
     staredRepos: [],
   }),
   getters: {
+    languageList() {
+      const list = this.staredRepos.map((i) => i.language);
+
+      const data = [...new Set(list)].filter(Boolean);
+      data.sort();
+      return data;
+    },
     tagedRepos() {
       const dataStore = useDataStore();
       const { tags, filter } = dataStore;
@@ -27,6 +34,10 @@ export default defineStore('star', {
 
       if (filter.isUntaged) {
         list = list.filter((i) => i._tags.length === 0);
+      }
+
+      if (filter.language) {
+        list = list.filter((i) => i.language === filter.language);
       }
 
       if (filter.tags.length) {
