@@ -12,6 +12,7 @@ export default defineStore('data', {
     filter: {
       isUntaged: false,
       mode: 'or', // 'or' 'and'
+      tags: [],
     },
   }),
 

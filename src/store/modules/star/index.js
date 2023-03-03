@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import { starApi } from '@/api/star';
 import useDataStore from '../data';
+import intersection from 'lodash/intersection';
 
 export default defineStore('star', {
   state: () => ({
@@ -26,6 +27,19 @@ export default defineStore('star', {
 
       if (filter.isUntaged) {
         list = list.filter((i) => i._tags.length === 0);
+      }
+
+      if (filter.tags.length) {
+        if (filter.mode === 'or') {
+          list = list.filter(
+            (i) => intersection(i._tags, filter.tags).length > 0
+          );
+        } else {
+          list = list.filter(
+            (i) =>
+              intersection(i._tags, filter.tags).length === filter.tags.length
+          );
+        }
       }
 
       return list;

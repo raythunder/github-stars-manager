@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-1 overflow-hidden">
-    <div class="flex-1 p-10 overflow-auto">
+    <div id="box" class="flex-1 p-10 overflow-auto">
       <div
         class="flex group p-10 py-20 border-b border-#d8dee4 hover:bg-gray-50 transition-all duration-200 relative overflow-hidden"
         v-for="(repo, index) in staredRepos"
@@ -56,7 +56,10 @@
               </a-button>
             </div>
 
-            <div v-show="!(isEditing && currentRepo.id === repo.id)">
+            <div
+              class="flex items-center"
+              v-show="!(isEditing && currentRepo.id === repo.id)"
+            >
               <a-tag
                 bordered
                 size="medium"
@@ -93,6 +96,16 @@
         </div>
       </div>
     </div>
+
+    <a-back-top
+      target-container="#box"
+      :style="{
+        position: 'absolute',
+        right: '50%',
+        transform: 'translateX(-50%)',
+      }"
+    >
+    </a-back-top>
   </div>
 </template>
 
@@ -186,4 +199,9 @@
   }
 </script>
 
-<style lang=""></style>
+<style lang="less">
+  .arco-tag {
+    height: 28px;
+    line-height: 28px;
+  }
+</style>

@@ -13,7 +13,13 @@
     <a-space size="large">
       <div>
         标签筛选模式：
-        <a-switch unchecked-color="#40c463">
+        <a-switch
+          @change="handleFilterChange('mode')"
+          v-model="filters.mode"
+          unchecked-color="#40c463"
+          checked-value="or"
+          unchecked-value="and"
+        >
           <template #checked> 包含任一标签 </template>
           <template #unchecked> 同时包含多个 </template>
         </a-switch>

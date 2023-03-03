@@ -10,40 +10,38 @@
   >
     <template #title> README.md </template>
 
-    <div class="text-center">
-      <a-spin v-if="loading" :loading="loading"> </a-spin>
-    </div>
+    <a-spin class="block w-full min-h-full" :loading="openLoading">
+      <div class="max-w-896px p-20 mx-auto">
+        <div
+          class="flex items-center mb-20"
+          v-if="branchList.length > 1 && visible"
+        >
+          <a-select v-model="branch" @change="getReadme" :loading="loading">
+            <template #prefix>
+              <i class="text-#0969da i-mdi-source-branch"> </i>
+            </template>
+            <a-option
+              v-for="item in branchList"
+              :key="item.name"
+              :value="item.name"
+            >
+              {{ item.name }}
+            </a-option>
+          </a-select>
+        </div>
 
-    <div class="max-w-896px p-20 mx-auto" v-if="!loading">
-      <div
-        class="flex items-center mb-20"
-        v-if="branchList.length > 1 && visible"
-      >
-        <a-select v-model="branch" @change="getReadme">
-          <template #prefix>
-            <i class="text-#0969da i-mdi-source-branch"> </i>
-          </template>
-          <a-option
-            v-for="item in branchList"
-            :key="item.name"
-            :value="item.name"
-          >
-            {{ item.name }}
-          </a-option>
-        </a-select>
+        <div class="markdown-body" v-html="htmlData"> </div>
+
+        <div class="text-center" v-if="!loading && !htmlData">
+          <a-tooltip position="bottom">
+            <template #content> 该分支没有README.md... </template>
+            <i
+              class="text-size-50 text-gray-200 i-ic-twotone-catching-pokemon"
+            ></i>
+          </a-tooltip>
+        </div>
       </div>
-
-      <div class="markdown-body" v-html="htmlData"> </div>
-
-      <div class="text-center" v-if="!loading && !htmlData">
-        <a-tooltip position="bottom">
-          <template #content> 该分支没有README.md... </template>
-          <i
-            class="text-size-50 text-gray-200 i-ic-twotone-catching-pokemon"
-          ></i>
-        </a-tooltip>
-      </div>
-    </div>
+    </a-spin>
   </a-drawer>
 </template>
 
@@ -60,15 +58,19 @@
   const defaultBranch = ref('');
 
   let repo = null;
-  const show = (data) => {
+  let openLoading = ref(false);
+
+  const show = async (data) => {
     repo = data;
 
     visible.value = true;
     branch.value = repo.default_branch;
     defaultBranch.value = repo.default_branch;
 
+    openLoading.value = true;
     getBranches();
-    getReadme(branch.value);
+    await getReadme(branch.value);
+    openLoading.value = false;
   };
 
   // 获取readme.md文件内容
