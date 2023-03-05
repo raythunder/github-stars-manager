@@ -76,11 +76,11 @@
             </div>
           </div>
 
-          <a-space wrap>
+          <a-overflow-list>
             <a-tag v-for="(t, i) in repo.topics" :key="i">
               {{ t }}
             </a-tag>
-          </a-space>
+          </a-overflow-list>
         </div>
 
         <div

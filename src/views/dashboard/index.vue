@@ -4,7 +4,14 @@
 
     <Filters></Filters>
 
-    <List @click="handleClick"></List>
+    <div class="flex-1 overflow-hidden">
+      <a-split v-model:size="splitSize" style="height: 100%">
+        <template #first> <TopicsFilter></TopicsFilter> </template>
+        <template #second>
+          <List @click="handleClick"></List>
+        </template>
+      </a-split>
+    </div>
 
     <Readme ref="readme"></Readme>
   </div>
@@ -13,6 +20,7 @@
 <script setup>
   import Header from './Header.vue';
   import Filters from './Filters.vue';
+  import TopicsFilter from './TopicsFilter.vue';
   import List from './List.vue';
   import Readme from './Readme.vue';
 
@@ -20,6 +28,8 @@
   async function handleClick(repo) {
     readme.value.show(repo);
   }
+
+  const splitSize = ref('300px');
 </script>
 
 <style lang="less">

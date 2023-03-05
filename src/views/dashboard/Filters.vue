@@ -1,11 +1,11 @@
 <template>
   <div class="text-white">
-    <div class="bg-gray-600 p-10 pb-2 shadow-inner">
+    <div class="flex justify-between bg-gray-700 p-10 pb-2 shadow-inner">
       <a-space wrap>
         <span>标签：</span>
 
         <a-tag
-          :checked="seleted.includes(tag.name)"
+          :checked="selected.includes(tag.name)"
           checkable
           color="blue"
           bordered
@@ -23,14 +23,27 @@
         </a-tooltip>
 
         <a-tooltip content="编辑标签" position="bottom">
-          <a-button shape="round" @click="seleted = []">
+          <a-button shape="round" @click="selected = []">
             <i class="i-ic-round-mode-edit"></i>
           </a-button>
         </a-tooltip>
       </a-space>
+
+      <div>
+        <a-switch
+          @change="handleFilterChange('mode')"
+          v-model="filters.mode"
+          unchecked-color="#40c463"
+          checked-value="or"
+          unchecked-value="and"
+        >
+          <template #checked> 包含任一标签 </template>
+          <template #unchecked> 同时包含多个 </template>
+        </a-switch>
+      </div>
     </div>
 
-    <div class="bg-gray-500 p-10 pb-2 shadow-inner border-b-1 border-gray-100">
+    <div class="bg-gray-600 p-10 pb-2">
       <a-space wrap>
         <span>语言：</span>
 
@@ -66,24 +79,41 @@
   const dataStore = useDataStore();
   const starStore = useStarStore();
 
-  const seleted = ref([]);
-
+  // ---------------------- 标签 ----------------------
+  const selected = ref([]);
   function handleClick(name) {
-    const index = seleted.value.indexOf(name);
+    const index = selected.value.indexOf(name);
     if (index > -1) {
-      seleted.value.splice(index, 1);
+      selected.value.splice(index, 1);
     } else {
-      seleted.value.push(name);
+      selected.value.push(name);
     }
 
-    dataStore.updateFilter('tags', seleted.value);
+    dataStore.updateFilter('tags', selected.value);
   }
 
   function clearSelectedTag() {
-    seleted.value = [];
+    selected.value = [];
     dataStore.updateFilter('tags', '');
   }
 
+  // ---------------------- 标签模式 ----------------------
+  const filters = reactive({ mode: 'or', isTaged: false });
+  watch(
+    () => dataStore.filter,
+    (val) => {
+      Object.assign(filters, val);
+    },
+    {
+      immediate: true,
+    }
+  );
+
+  function handleFilterChange(key) {
+    dataStore.updateFilter(key, filters[key]);
+  }
+
+  // ---------------------- 语言 ----------------------
   const seletedLanguage = ref('');
   function handleClickLanguage(name) {
     seletedLanguage.value = name;

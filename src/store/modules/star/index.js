@@ -9,6 +9,12 @@ export default defineStore('star', {
     staredRepos: [],
   }),
   getters: {
+    topics() {
+      const list = this.staredRepos.map((i) => i.topics).flat();
+      const data = [...new Set(list)].filter(Boolean);
+      data.sort();
+      return data;
+    },
     languageList() {
       const list = this.staredRepos.map((i) => i.language);
 
@@ -51,6 +57,12 @@ export default defineStore('star', {
               intersection(i._tags, filter.tags).length === filter.tags.length
           );
         }
+      }
+
+      if (filter.topics.length) {
+        list = list.filter(
+          (i) => intersection(i.topics, filter.topics).length > 0
+        );
       }
 
       return list;

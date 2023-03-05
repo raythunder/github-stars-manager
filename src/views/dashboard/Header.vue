@@ -12,28 +12,13 @@
 
     <a-space size="large">
       <div>
-        标签筛选模式：
-        <a-switch
-          @change="handleFilterChange('mode')"
-          v-model="filters.mode"
-          unchecked-color="#40c463"
-          checked-value="or"
-          unchecked-value="and"
-        >
-          <template #checked> 包含任一标签 </template>
-          <template #unchecked> 同时包含多个 </template>
-        </a-switch>
-      </div>
-
-      <div>
-        标记筛选：
         <a-switch
           @change="handleFilterChange('isUntaged')"
           v-model="filters.isUntaged"
           unchecked-color="#40c463"
         >
-          <template #checked> 未标记</template>
-          <template #unchecked> 全部</template>
+          <template #checked> 未标记的收藏</template>
+          <template #unchecked> 全部收藏</template>
         </a-switch>
       </div>
     </a-space>
