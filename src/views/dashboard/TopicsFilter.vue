@@ -1,23 +1,40 @@
 <template>
-  <a-space size="medium" direction="vertical" class="p-10">
+  <a-space
+    direction="vertical"
+    class="p-10 min-h-full bg-gray-500 text-white w-full"
+  >
     <div> Topics </div>
 
-    <a-input placeholder="筛选主题" v-model="keyword" allow-clear />
-
-    <a-space wrap v-if="selected.length">
+    <a-space
+      wrap
+      v-if="filters.topics.length"
+      class="border-b-1 border-gray-300 w-full"
+    >
       <a-tag
         checkable
         color="blue"
         bordered
         @click="handleClickTopic(topic)"
-        v-for="(topic, index) in selected"
-        :key="index"
+        v-for="topic in filters.topics"
+        :key="topic"
       >
         {{ topic }}
       </a-tag>
+
+      <a-tooltip
+        content="清空选择"
+        position="bottom"
+        background-color="#165DFF"
+      >
+        <a-button shape="circle" @click="clearSelectedTag">
+          <template #icon>
+            <icon-delete />
+          </template>
+        </a-button>
+      </a-tooltip>
     </a-space>
 
-    <a-button @click="clearSelectedTag" long type="outline">clear</a-button>
+    <a-input placeholder="筛选主题" v-model="keyword" allow-clear />
 
     <a-space wrap>
       <a-tag
@@ -41,31 +58,61 @@
   const dataStore = useDataStore();
   const starStore = useStarStore();
 
+  const filters = reactive({
+    mode: 'or',
+    isTaged: false,
+    tags: [],
+    language: '',
+    topics: [],
+  });
+
+  watch(
+    () => dataStore.filter,
+    (val) => {
+      Object.assign(filters, val);
+    },
+    {
+      immediate: true,
+      deep: true,
+    }
+  );
+
   const keyword = ref('');
 
   const selected = ref([]);
 
   const filterTopic = computed(() => {
     return starStore.topics.filter((topic) => {
-      return topic.includes(keyword.value) && !selected.value.includes(topic);
+      return topic.includes(keyword.value) && !filters.topics.includes(topic);
     });
   });
 
   function handleClickTopic(name) {
-    const index = selected.value.indexOf(name);
+    const index = filters.topics.indexOf(name);
     if (index > -1) {
-      selected.value.splice(index, 1);
+      filters.topics.splice(index, 1);
     } else {
-      selected.value.push(name);
+      filters.topics.push(name);
     }
 
-    dataStore.updateFilter('topics', selected.value);
+    dataStore.updateFilter('topics', filters.topics);
   }
 
   function clearSelectedTag() {
-    selected.value = [];
-    dataStore.updateFilter('topics', '');
+    filters.topics = [];
+    dataStore.updateFilter('topics', []);
   }
 </script>
 
-<style lang=""></style>
+<style lang="less" scoped>
+  :deep .arco-tag {
+    color: white;
+  }
+  :deep .arco-tag:hover {
+    color: black;
+  }
+
+  :deep .arco-tag-checked:hover {
+    color: rgb(var(--blue-6));
+  }
+</style>

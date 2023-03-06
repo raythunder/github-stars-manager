@@ -10,7 +10,13 @@
       <span>{{ userInfo.login }}</span>
     </a>
 
+    <div class="flex justify-center items-center text-yellow-400">
+      <starLoading class="mr-10"></starLoading> 正在获取收藏列表...
+    </div>
+
     <a-space size="large">
+      <TagFilterMode></TagFilterMode>
+
       <div>
         <a-switch
           @change="handleFilterChange('isUntaged')"
@@ -26,19 +32,27 @@
 </template>
 
 <script setup>
+  import starLoading from '@/components/starLoading.vue';
   import { useUserStore, useDataStore } from '@/store';
+  import TagFilterMode from '@/components/tagFilterMode.vue';
 
   const userInfo = useUserStore();
   const dataStore = useDataStore();
-  const filters = reactive({ mode: 'or', isTaged: false });
+  const filters = reactive({ mode: 'or', isUntaged: false });
 
   watch(
     () => dataStore.filter,
     (val) => {
+      console.log(
+        '%c [ val ]-41',
+        'font-size:13px; background:pink; color:#bf2c9f;',
+        val
+      );
       Object.assign(filters, val);
     },
     {
       immediate: true,
+      deep: true,
     }
   );
 

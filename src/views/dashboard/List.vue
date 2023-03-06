@@ -1,108 +1,108 @@
 <template>
-  <div class="flex flex-1 overflow-hidden">
-    <div id="box" class="flex-1 p-10 overflow-auto">
-      <div
-        class="flex group p-10 py-20 border-b border-#d8dee4 hover:bg-gray-50 transition-all duration-200 relative overflow-hidden"
-        v-for="(repo, index) in staredRepos"
-        :key="index"
-      >
-        <div>
-          <div class="p-0 m-0 text-size-20 font-bold flex items-center">
-            <i class="i-ic-round-star text-yellow-500 mr-10 text-shadow-sm"></i>
-            <a
-              class="no-underline hover:underline text-#0969da"
-              :href="repo.html_url"
-              target="_blank"
+  <div>
+    <div
+      class="flex w-full group border-b border-#d8dee4 hover:bg-gray-50 relative overflow-hidden"
+      v-for="(repo, index) in staredRepos"
+      :key="index"
+    >
+      <div class="flex-1 max-w-full p-20">
+        <div class="p-0 m-0 text-size-20 font-bold flex items-center">
+          <i class="i-ic-round-star text-yellow-500 mr-10 text-shadow-sm"></i>
+          <a
+            class="no-underline hover:underline text-#0969da"
+            :href="repo.html_url"
+            target="_blank"
+          >
+            <span class="font-normal">{{ repo.owner.login }} /</span>
+            {{ repo.name }}
+          </a>
+        </div>
+
+        <div class="my-10 text-#57606a leading-1.8em clipTxt">
+          {{ repo.description }}
+        </div>
+
+        <div class="flex items-center mb-10">
+          <div v-if="isEditing && currentRepo.id === repo.id">
+            <a-select
+              style="width: 260px; max-width: 100%"
+              class="mr-10"
+              size="small"
+              v-model="currentRepo._tags"
+              placeholder="Please select ..."
+              multiple
+              :options="dataStore.tagNames"
+              allow-create
+              :ref="(el) => (currentInput[repo.id] = el)"
             >
-              <span class="font-normal">{{ repo.owner.login }} /</span>
-              {{ repo.name }}
-            </a>
+            </a-select>
+
+            <a-button
+              size="small"
+              shape="round"
+              type="primary"
+              class="mr-10"
+              :loading="currentRepo.updating"
+              @click="handleSaveTag(repo)"
+            >
+              保存
+            </a-button>
+
+            <a-button size="small" shape="round" @click="isEditing = false">
+              取消
+            </a-button>
           </div>
 
           <div
-            class="clipTxt py-20 text-#57606a leading-1.8em h-76 overflow-hidden"
+            class="flex items-center"
+            v-show="!(isEditing && currentRepo.id === repo.id)"
           >
-            {{ repo.description }}
-          </div>
-
-          <div class="flex items-center mb-10">
-            <div v-if="isEditing && currentRepo.id === repo.id">
-              <a-select
-                style="width: 260px; max-width: 100%"
-                class="mr-10"
-                size="small"
-                v-model="currentRepo._tags"
-                placeholder="Please select ..."
-                multiple
-                :options="dataStore.tagNames"
-                allow-create
-                :ref="(el) => (currentInput[repo.id] = el)"
-              >
-              </a-select>
-
-              <a-button
-                size="small"
-                shape="round"
-                type="primary"
-                class="mr-10"
-                :loading="currentRepo.updating"
-                @click="handleSaveTag(repo)"
-              >
-                保存
-              </a-button>
-
-              <a-button size="small" shape="round" @click="isEditing = false">
-                取消
-              </a-button>
-            </div>
-
-            <div
-              class="flex items-center"
-              v-show="!(isEditing && currentRepo.id === repo.id)"
+            <a-tag
+              size="medium"
+              v-for="(t, i) in repo._tags"
+              :key="i"
+              color="#0969da"
+              class="mr-10"
             >
-              <a-tag
-                bordered
-                size="medium"
-                v-for="(t, i) in repo._tags"
-                :key="i"
-                color="blue"
-                class="mr-10"
-              >
-                {{ t }}
-              </a-tag>
-              <a-button size="small" type="outline" @click="handleAddTag(repo)">
-                编辑标签
-              </a-button>
-            </div>
-          </div>
-
-          <a-overflow-list>
-            <a-tag v-for="(t, i) in repo.topics" :key="i">
               {{ t }}
             </a-tag>
-          </a-overflow-list>
+            <a-button
+              shape="round"
+              size="small"
+              type="outline"
+              @click="handleAddTag(repo)"
+            >
+              <template #icon>
+                <icon-tags v-if="repo._tags.length" />
+                <icon-tag v-else />
+              </template>
+              {{ repo._tags.length ? '编辑' : '添加' }}标签
+            </a-button>
+          </div>
         </div>
 
-        <div
-          class="group-hover:w-10% group-hover:min-w-100 flex-shrink-0"
-        ></div>
+        <a-overflow-list style="width: 100%">
+          <a-tag v-for="(t, i) in repo.topics" :key="i">
+            {{ t }}
+          </a-tag>
+        </a-overflow-list>
+      </div>
 
-        <div
-          @click="emit('click', repo)"
-          class="w-10% border-l border-l-gray-200 min-w-100 text-#0969da absolute h-full top-0 right-0 flex flex-col justify-center items-center group-hover:bg-blue-50 group-hover:translate-x-0 translate-x-full transition-all duration-200 cursor-pointer"
-        >
-          <i class="i-ic-baseline-chrome-reader-mode text-size-50"></i>
-          README.md
-        </div>
+      <div class="group-hover:w-10% group-hover:min-w-100 flex-shrink-0"></div>
+
+      <div
+        @click="emit('click', repo)"
+        class="w-10% border-l border-l-gray-200 min-w-100 text-#0969da absolute h-full top-0 right-0 flex flex-col justify-center items-center group-hover:bg-blue-50 group-hover:translate-x-0 translate-x-full transition-all duration-200 cursor-pointer"
+      >
+        <i class="i-ic-baseline-chrome-reader-mode text-size-50"></i>
+        README.md
       </div>
     </div>
 
     <a-back-top
-      target-container="#box"
+      target-container=".arco-split-pane-second"
       :style="{
         position: 'absolute',
-        right: '50%',
-        transform: 'translateX(-50%)',
       }"
     >
     </a-back-top>

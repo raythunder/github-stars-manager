@@ -1,14 +1,13 @@
 <template>
   <div class="text-white">
     <div class="flex justify-between bg-gray-700 p-10 pb-2 shadow-inner">
-      <a-space wrap>
+      <a-space wrap class="custom-tag">
         <span>标签：</span>
 
         <a-tag
-          :checked="selected.includes(tag.name)"
+          :checked="filters.tags.includes(tag.name)"
           checkable
           color="blue"
-          bordered
           @click="handleClick(tag.name)"
           v-for="(tag, index) in dataStore.tags"
           :key="index"
@@ -16,52 +15,49 @@
           {{ tag.name }}
         </a-tag>
 
-        <a-tooltip content="清空选择" position="bottom">
-          <a-button status="danger" shape="round" @click="clearSelectedTag">
-            <i class="i-mdi-eraser"></i>
+        <a-tooltip
+          content="清空选择"
+          position="bottom"
+          background-color="#165DFF"
+        >
+          <a-button shape="circle" @click="clearSelectedTag">
+            <template #icon>
+              <icon-delete />
+            </template>
           </a-button>
         </a-tooltip>
 
-        <a-tooltip content="编辑标签" position="bottom">
-          <a-button shape="round" @click="selected = []">
-            <i class="i-ic-round-mode-edit"></i>
+        <a-tooltip
+          content="编辑标签"
+          position="bottom"
+          background-color="#165DFF"
+        >
+          <a-button shape="circle" @click="filters.tags = []">
+            <template #icon>
+              <icon-edit />
+            </template>
           </a-button>
         </a-tooltip>
       </a-space>
-
-      <div>
-        <a-switch
-          @change="handleFilterChange('mode')"
-          v-model="filters.mode"
-          unchecked-color="#40c463"
-          checked-value="or"
-          unchecked-value="and"
-        >
-          <template #checked> 包含任一标签 </template>
-          <template #unchecked> 同时包含多个 </template>
-        </a-switch>
-      </div>
     </div>
 
     <div class="bg-gray-600 p-10 pb-2">
-      <a-space wrap>
+      <a-space wrap class="custom-tag">
         <span>语言：</span>
 
         <a-tag
           color="blue"
           checkable
-          bordered
           @click="handleClickLanguage('')"
-          :checked="seletedLanguage === ''"
+          :checked="filters.language === ''"
         >
           全部
         </a-tag>
 
         <a-tag
-          :checked="seletedLanguage === lan"
+          :checked="filters.language === lan"
           checkable
           color="blue"
-          bordered
           @click="handleClickLanguage(lan)"
           v-for="(lan, index) in starStore.languageList"
           :key="index"
@@ -79,26 +75,13 @@
   const dataStore = useDataStore();
   const starStore = useStarStore();
 
-  // ---------------------- 标签 ----------------------
-  const selected = ref([]);
-  function handleClick(name) {
-    const index = selected.value.indexOf(name);
-    if (index > -1) {
-      selected.value.splice(index, 1);
-    } else {
-      selected.value.push(name);
-    }
+  const filters = reactive({
+    mode: 'or',
+    isTaged: false,
+    tags: [],
+    language: '',
+  });
 
-    dataStore.updateFilter('tags', selected.value);
-  }
-
-  function clearSelectedTag() {
-    selected.value = [];
-    dataStore.updateFilter('tags', '');
-  }
-
-  // ---------------------- 标签模式 ----------------------
-  const filters = reactive({ mode: 'or', isTaged: false });
   watch(
     () => dataStore.filter,
     (val) => {
@@ -106,30 +89,36 @@
     },
     {
       immediate: true,
+      deep: true,
     }
   );
 
-  function handleFilterChange(key) {
-    dataStore.updateFilter(key, filters[key]);
+  // ---------------------- 标签 ----------------------
+  function handleClick(name) {
+    const index = filters.tags.indexOf(name);
+    if (index > -1) {
+      filters.tags.splice(index, 1);
+    } else {
+      filters.tags.push(name);
+    }
+
+    dataStore.updateFilter('tags', filters.tags);
+
+    if (filters.tags.length) {
+      dataStore.updateFilter('isUntaged', false);
+    }
+  }
+
+  function clearSelectedTag() {
+    filters.tags = [];
+    dataStore.updateFilter('tags', []);
   }
 
   // ---------------------- 语言 ----------------------
-  const seletedLanguage = ref('');
   function handleClickLanguage(name) {
-    seletedLanguage.value = name;
+    filters.language = name;
     dataStore.updateFilter('language', name);
   }
 </script>
 
-<style lang="less" scoped>
-  :deep .arco-tag {
-    color: white;
-  }
-  :deep .arco-tag:hover {
-    color: black;
-  }
-
-  :deep .arco-tag-checked:hover {
-    color: rgb(var(--blue-6));
-  }
-</style>
+<style lang="less" scoped></style>

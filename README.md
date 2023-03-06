@@ -1,4 +1,4 @@
-# My Github Stars
+# My github stars
 
 https://github.com/znlbwo/gitstars
 
@@ -6,15 +6,19 @@ https://github.com/iamsk/astral
 
 https://app.astralapp.com/dashboard
 
-# get your personal access token
+# Get your personal access token
 
 https://github.com/settings/tokens
+
+# Star loader from here
+
+https://codepen.io/slyka85/pen/QvBQPb
 
 # TODO
 
 * [X] 保存本地筛选设置
 * [ ] pwa
-* [ ] 主题筛选
+* [X] 主题筛选
 * [ ] 排序选项
 * [ ] 页面宽度设置
 * [ ] 主题设置

@@ -34,3 +34,29 @@
     router.push('/dashboard');
   }
 </script>
+
+<style lang="less">
+  @blue: #0969da;
+
+  .custom-tag {
+    .arco-tag {
+      color: white;
+    }
+    .arco-tag:hover {
+      color: black;
+    }
+
+    .arco-tag-checked:hover {
+      color: rgb(var(--blue-6));
+    }
+
+    .arco-tag.arco-tag-checked.arco-tag-blue {
+      background-color: @blue;
+      color: #fff;
+    }
+
+    .arco-tag.arco-tag-checkable.arco-tag-checked.arco-tag-blue.arco-tag:hover {
+      background-color: @blue;
+    }
+  }
+</style>
