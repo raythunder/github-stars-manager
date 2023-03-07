@@ -6,6 +6,7 @@
 
         <a-tag
           :checked="filters.tags.includes(tag.name)"
+          :bordered="filters.tags.includes(tag.name)"
           checkable
           color="blue"
           @click="handleClick(tag.name)"
@@ -50,6 +51,7 @@
           checkable
           @click="handleClickLanguage('')"
           :checked="filters.language === ''"
+          :bordered="filters.language === ''"
         >
           全部
         </a-tag>

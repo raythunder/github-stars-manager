@@ -1,6 +1,6 @@
 <template>
   <div class="w-30px h-30px inline-block" ref="wrap">
-    <div class="loader loader-2" ref="inner">
+    <div class="loader" :class="{ 'loader-2': loading }" ref="inner">
       <svg
         class="loader-star"
         xmlns="http://www.w3.org/2000/svg"
@@ -18,6 +18,13 @@
 </template>
 
 <script setup>
+  defineProps({
+    loading: {
+      type: Boolean,
+      default: false,
+    },
+  });
+
   const wrap = ref();
   const inner = ref();
 

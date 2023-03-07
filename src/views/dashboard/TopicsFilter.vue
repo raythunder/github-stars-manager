@@ -8,7 +8,7 @@
     <a-space
       wrap
       v-if="filters.topics.length"
-      class="border-b-1 border-gray-300 w-full"
+      class="border-b-1 border-gray-300 w-full custom-tag"
     >
       <a-tag
         checkable

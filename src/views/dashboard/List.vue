@@ -23,10 +23,9 @@
         </div>
 
         <div class="flex items-center mb-10">
-          <div v-if="isEditing && currentRepo.id === repo.id">
+          <template v-if="isEditing && currentRepo.id === repo.id">
             <a-select
-              style="width: 260px; max-width: 100%"
-              class="mr-10"
+              class="mr-10 max-w-500px"
               size="small"
               v-model="currentRepo._tags"
               placeholder="Please select ..."
@@ -51,7 +50,7 @@
             <a-button size="small" shape="round" @click="isEditing = false">
               取消
             </a-button>
-          </div>
+          </template>
 
           <div
             class="flex items-center"
