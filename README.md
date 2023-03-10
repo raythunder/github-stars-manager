@@ -1,10 +1,8 @@
-# My github stars
+# Github stars manager
 
-https://github.com/znlbwo/gitstars
+This is a web tool designed to manage your GitHub stars. It uses tags to organize and categorize your starred repositories. All data is saved in your own GitHub Gists. 
 
-https://github.com/iamsk/astral
-
-https://app.astralapp.com/dashboard
+这是一个用来管理你的github stars的网页工具，它通过标签来管理和分类你的stars。所有的数据保存在你自己的github gists.
 
 # Get your personal access token
 
