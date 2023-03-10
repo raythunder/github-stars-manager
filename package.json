@@ -61,6 +61,7 @@
     "rollup-plugin-visualizer": "^5.8.2",
     "simple-git-hooks": "^2.8.1",
     "unocss": "^0.45.14",
+    "unocss-preset-extra": "^0.4.3",
     "unplugin-auto-import": "^0.12.0",
     "unplugin-vue-components": "^0.22.8",
     "vite": "^3.2.4",

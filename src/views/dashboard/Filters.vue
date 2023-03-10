@@ -13,7 +13,19 @@
           v-for="(tag, index) in dataStore.tags"
           :key="index"
         >
-          {{ tag.name }}
+          <span class="align-middle">
+            {{ tag.name }}
+          </span>
+
+          <a-popconfirm
+            title="确定删除标签吗？"
+            @confirm="starStore.deleteTag(tag.name)"
+          >
+            <icon-close-circle-fill
+              class="align-middle text-size-16 ml-5"
+              :class="{ 'animate-pulse animate-infinite': isEditing }"
+            />
+          </a-popconfirm>
         </a-tag>
 
         <a-tooltip
@@ -33,7 +45,7 @@
           position="bottom"
           background-color="#165DFF"
         >
-          <a-button shape="circle" @click="filters.tags = []">
+          <a-button shape="circle" @click="handleEdit">
             <template #icon>
               <icon-edit />
             </template>
@@ -120,6 +132,13 @@
   function handleClickLanguage(name) {
     filters.language = name;
     dataStore.updateFilter('language', name);
+  }
+
+  // ---------------------- 编辑标签 ----------------------
+  const isEditing = ref(false);
+  function handleEdit() {
+    isEditing.value = true;
+    filters.tags = [];
   }
 </script>
 

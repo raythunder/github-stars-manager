@@ -8,6 +8,7 @@ import { presetUno, presetAttributify, presetIcons } from 'unocss';
 import { createHtmlPlugin } from 'vite-plugin-html';
 import AutoImport from 'unplugin-auto-import/vite';
 import presetRemToPx from '@unocss/preset-rem-to-px';
+import { presetExtra } from 'unocss-preset-extra';
 
 export default defineConfig({
   plugins: [
@@ -32,6 +33,7 @@ export default defineConfig({
     Unocss({
       presets: [
         presetUno(), // 预设 tailwind\Windi css
+        // presetExtra(), // https://github.com/MoomFE/unocss-preset-extra
         presetAttributify(), // 属性模式 https://github.com/unocss/unocss/tree/main/packages/preset-attributify
         presetIcons({
           prefix: 'i-',
