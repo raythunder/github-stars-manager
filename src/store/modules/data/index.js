@@ -9,7 +9,7 @@ export default defineStore('data', {
   state: () => ({
     tags: [],
     updateTime: 0,
-    filter: ls.get('filter') || {
+    filter: {
       isUntaged: false,
       mode: 'or', // 'or' 'and'
       tags: [],
@@ -52,7 +52,7 @@ export default defineStore('data', {
     updateFilter(key, val) {
       this.filter[key] = val;
 
-      ls.set('filter', this.filter);
+      // ls.set('filter', this.filter);
     },
   },
 });

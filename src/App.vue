@@ -36,6 +36,11 @@
 </script>
 
 <style lang="less">
+  html,
+  body {
+    padding: 0;
+    margin: 0;
+  }
   @blue: #0969da;
 
   .custom-tag {

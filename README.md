@@ -1,29 +1,27 @@
+English | [中文](README-CN.md)
+
 # Github stars manager
 
-This is a web tool designed to manage your GitHub stars. It uses tags to organize and categorize your starred repositories. All data is saved in your own GitHub Gists. 
+This is a web tool designed to manage your GitHub stars. It uses tags to organize and categorize your starred repositories. All data is saved in your own GitHub Gists.
 
-这是一个用来管理你的github stars的网页工具，它通过标签来管理和分类你的stars。所有的数据保存在你自己的github gists.
+## Demo
+
+![screen](screen/screen.png)
+
+The preview of the README.md file matches the official format.
+
+![screen3](screen/screen3.png)
 
 # Get your personal access token
 
-https://github.com/settings/tokens
+Get access token from [Here](https://github.com/settings/tokens)
+
+If you need to use it for an extended period of time, choose 'No expiration' for the expiration time.
+
+![screen1](screen/screen1.png)
+
+![screen2](screen/screen2.png)
 
 # Star loader from here
 
 https://codepen.io/slyka85/pen/QvBQPb
-
-# TODO
-
-* [X] 保存本地筛选设置
-* [ ] pwa
-* [X] 主题筛选
-* [ ] 排序选项
-* [ ] 页面宽度设置
-* [ ] 主题设置
-* [ ] 多语言支持
-* [X] 语言筛选
-* [ ] 标签筛选
-  * [ ] 标签颜色自定义
-  * [ ] 标签排序
-  * [ ] 标签分组
-* [ ] 导出到多维表格

@@ -16,16 +16,6 @@
           <span class="align-middle">
             {{ tag.name }}
           </span>
-
-          <a-popconfirm
-            title="确定删除标签吗？"
-            @confirm="starStore.deleteTag(tag.name)"
-          >
-            <icon-close-circle-fill
-              class="align-middle text-size-16 ml-5"
-              :class="{ 'animate-pulse animate-infinite': isEditing }"
-            />
-          </a-popconfirm>
         </a-tag>
 
         <a-tooltip
@@ -35,7 +25,7 @@
         >
           <a-button shape="circle" @click="clearSelectedTag">
             <template #icon>
-              <icon-delete />
+              <i class="i-mdi-checkbox-intermediate-variant"></i>
             </template>
           </a-button>
         </a-tooltip>
@@ -45,7 +35,7 @@
           position="bottom"
           background-color="#165DFF"
         >
-          <a-button shape="circle" @click="handleEdit">
+          <a-button shape="circle" @click="editTag.show()">
             <template #icon>
               <icon-edit />
             </template>
@@ -80,11 +70,16 @@
         </a-tag>
       </a-space>
     </div>
+
+    <EditTag ref="editTag"></EditTag>
   </div>
 </template>
 
 <script setup>
   import { useDataStore, useStarStore } from '@/store';
+  import EditTag from './EditTag.vue';
+
+  const editTag = ref();
 
   const dataStore = useDataStore();
   const starStore = useStarStore();
@@ -118,6 +113,7 @@
 
     dataStore.updateFilter('tags', filters.tags);
 
+    // 如果选择标签，取消选中未标记
     if (filters.tags.length) {
       dataStore.updateFilter('isUntaged', false);
     }
@@ -132,13 +128,6 @@
   function handleClickLanguage(name) {
     filters.language = name;
     dataStore.updateFilter('language', name);
-  }
-
-  // ---------------------- 编辑标签 ----------------------
-  const isEditing = ref(false);
-  function handleEdit() {
-    isEditing.value = true;
-    filters.tags = [];
   }
 </script>
 

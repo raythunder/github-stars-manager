@@ -11,5 +11,10 @@
     "strings": false
   },
   "css.validate": false,
-  "unocss.root": "config/"
+  "unocss.root": "config/",
+  "i18n-ally.localesPaths": [
+    "src/locale",
+    "src/components/message-box/locale",
+    "src/views/dashboard/locale"
+  ]
 }

@@ -2,6 +2,7 @@ import axios from 'axios';
 import { Message, Modal } from '@arco-design/web-vue';
 import { useUserStore } from '@/store';
 import { getToken } from '@/utils/auth';
+import { ls } from '@/utils';
 
 axios.defaults.baseURL = 'https://api.github.com';
 
@@ -33,6 +34,15 @@ axios.interceptors.response.use(
     return res;
   },
   (error) => {
+    if (error.response.status === 401) {
+      window.location.href = '/#/init';
+
+      ls.set('token', '');
+
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+    }
     Message.error({
       content: error.response.data.message || 'Request Error',
       duration: 5 * 1000,

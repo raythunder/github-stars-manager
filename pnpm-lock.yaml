@@ -58,6 +58,7 @@ specifiers:
   vue-i18n: ^9.2.2
   vue-ls: ^4.2.0
   vue-router: ^4.0.14
+  vuedraggable: ^4.1.0
 
 dependencies:
   '@arco-design/web-vue': 2.42.1_vue@3.2.47
@@ -79,6 +80,7 @@ dependencies:
   vue-i18n: 9.2.2_vue@3.2.47
   vue-ls: 4.2.0
   vue-router: 4.1.6_vue@3.2.47
+  vuedraggable: 4.1.0_vue@3.2.47
 
 devDependencies:
   '@commitlint/cli': 17.4.2
@@ -6076,6 +6078,10 @@ packages:
       is-plain-obj: 1.1.0
     dev: true
 
+  /sortablejs/1.14.0:
+    resolution: {integrity: sha512-pBXvQCs5/33fdN1/39pPL0NZF20LeRbLQ5jtnheIPN9JQAaufGjKdWduZn4U7wCtVuzKhmRkI0DFYHYRbB2H1w==}
+    dev: false
+
   /source-map-js/1.0.2:
     resolution: {integrity: sha512-R0XvVJ9WusLiqTCEiGCmICCMplcCkIwwR11mOSD9CR5u+IXYdiseeEuXCVAjS54zqwkLcPNnmU4OeJ6tUrWhDw==}
     engines: {node: '>=0.10.0'}
@@ -7015,6 +7021,15 @@ packages:
       '@vue/runtime-dom': 3.2.47
       '@vue/server-renderer': 3.2.47_vue@3.2.47
       '@vue/shared': 3.2.47
+
+  /vuedraggable/4.1.0_vue@3.2.47:
+    resolution: {integrity: sha512-FU5HCWBmsf20GpP3eudURW3WdWTKIbEIQxh9/8GE806hydR9qZqRRxRE3RjqX7PkuLuMQG/A7n3cfj9rCEchww==}
+    peerDependencies:
+      vue: ^3.0.1
+    dependencies:
+      sortablejs: 1.14.0
+      vue: 3.2.47
+    dev: false
 
   /webpack-sources/3.2.3:
     resolution: {integrity: sha512-/DyMEOrDgLKKIG0fmvtz+4dUX/3Ghozwgm6iPp8KRhvn+eQf9+Q7GWxVNMk3+uCPWfdXYC4ExGBckIXdFEfH1w==}

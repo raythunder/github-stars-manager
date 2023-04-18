@@ -1,11 +1,10 @@
 <template>
-  <div class="h-100vh flex justify-center items-center">
+  <div class="min-h-100vh flex justify-center items-center">
     <div>
       <a-form
         ref="formRef"
-        auto-label-width
+        layout="vertical"
         class="px-5 mx-auto"
-        layout="inline"
         :model="form"
       >
         <a-form-item
@@ -13,10 +12,17 @@
           label="AccessToken"
           :rules="[{ required: true, message: '请输入' }]"
         >
-          <a-input v-model="form.token"></a-input>
+          <a-input v-model="form.token" style="width: 240px"></a-input>
+
+          <template #help>
+            get AccessToken from
+            <a class="text-blue-500" href="https://github.com/settings/tokens">
+              Here
+            </a>
+          </template>
         </a-form-item>
         <a-form-item>
-          <a-button type="primary" @click="handleSubmit">确定</a-button>
+          <a-button long type="primary" @click="handleSubmit">确定</a-button>
         </a-form-item>
       </a-form>
     </div>

@@ -5,7 +5,11 @@
     <Filters></Filters>
 
     <div class="flex-1 overflow-hidden">
-      <a-split v-model:size="splitSize" style="height: 100%">
+      <a-split
+        v-model:size="splitSize"
+        @move-end="handleMoveEnd"
+        style="height: 100%"
+      >
         <template #first> <TopicsFilter></TopicsFilter> </template>
         <template #second>
           <List @click="handleClick"></List>
@@ -23,13 +27,17 @@
   import TopicsFilter from './TopicsFilter.vue';
   import List from './List.vue';
   import Readme from './Readme.vue';
+  import { ls } from '@/utils';
 
   const readme = ref();
   async function handleClick(repo) {
     readme.value.show(repo);
   }
 
-  const splitSize = ref('300px');
+  const splitSize = ref(ls.get('splitSize') || '300px');
+  function handleMoveEnd() {
+    ls.set('splitSize', splitSize.value);
+  }
 </script>
 
 <style lang="less">

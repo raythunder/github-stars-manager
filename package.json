@@ -35,7 +35,8 @@
     "vue-echarts": "^6.2.3",
     "vue-i18n": "^9.2.2",
     "vue-ls": "^4.2.0",
-    "vue-router": "^4.0.14"
+    "vue-router": "^4.0.14",
+    "vuedraggable": "^4.1.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.1.2",

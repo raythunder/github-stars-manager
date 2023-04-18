@@ -23,10 +23,7 @@
     <a-space size="large" class="custom-tag">
       <TagFilterMode></TagFilterMode>
 
-      <a-radio-group
-        v-model="filters.isUntaged"
-        @change="handleFilterChange('isUntaged', $event)"
-      >
+      <a-radio-group v-model="filters.isUntaged" @change="handleChange">
         <a-radio :value="true">
           <template #radio="{ checked }">
             <a-tag color="blue" :checked="checked" checkable>
@@ -65,8 +62,13 @@
     }
   );
 
-  function handleFilterChange(key) {
-    dataStore.updateFilter(key, filters[key]);
+  function handleChange(val) {
+    dataStore.updateFilter('isUntaged', val);
+
+    // 筛选未标记的收藏时，清空标签筛选
+    if (val) {
+      dataStore.updateFilter('tags', []);
+    }
   }
 </script>
 
