@@ -18,6 +18,14 @@
         <starLoading :loading="starData.loading" class="mr-10"></starLoading>
         <span>正在获取收藏列表...</span>
       </div>
+
+      <div
+        v-if="!starData.loading"
+        class="flex items-center cursor-pointer"
+        @click="starData.fetchStaredList(true)"
+      >
+        <i class="i-ic-baseline-sync ml-20"></i> 同步最新收藏
+      </div>
     </div>
 
     <a-space size="large" class="custom-tag">

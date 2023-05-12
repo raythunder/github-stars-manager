@@ -99,6 +99,11 @@
     }
 
     htmlData.value = replaceLinks(html);
+    console.log(
+      '%c [ htmlData.value ]-102',
+      'font-size:13px; background:pink; color:#bf2c9f;',
+      htmlData.value
+    );
     loading.value = false;
   }
 

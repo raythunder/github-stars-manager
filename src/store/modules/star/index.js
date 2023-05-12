@@ -2,13 +2,14 @@ import { defineStore } from 'pinia';
 import { starApi } from '@/api/star';
 import useDataStore from '../data';
 import intersection from 'lodash/intersection';
+import { ls } from '@/utils';
 
 const isDev = import.meta.env.DEV;
 
 export default defineStore('star', {
   state: () => ({
     loading: false,
-    staredRepos: [],
+    staredRepos: ls.get('staredRepos') || [],
   }),
   getters: {
     topics() {
@@ -71,14 +72,17 @@ export default defineStore('star', {
     },
   },
   actions: {
-    async fetchStaredList() {
+    async fetchStaredList(flag) {
+      if (!flag && ls.get('staredRepos')) {
+        return;
+      }
       this.loading = true;
       let starredRepos = [];
       let page = 1;
       // eslint-disable-next-line no-constant-condition
       if (isDev) {
         let list = await starApi.getList({ per_page: 30, page });
-        while (page < 2) {
+        while (page < 4) {
           // 将本页的标星仓库列表合并到总列表中
           starredRepos = starredRepos.concat(list);
           this.staredRepos = starredRepos; // 此处赋值是为了更快的进行渲染，让用户尽快看到数据
@@ -102,7 +106,34 @@ export default defineStore('star', {
       }
 
       this.loading = false;
-      this.staredRepos = starredRepos;
+      this.staredRepos = starredRepos.map((i) => {
+        const {
+          id,
+          name,
+          full_name,
+          default_branch,
+          html_url,
+          description,
+          _tags,
+          language,
+          topics,
+          owner,
+        } = i;
+
+        return {
+          id,
+          name,
+          full_name,
+          default_branch,
+          html_url,
+          description,
+          _tags,
+          language,
+          topics,
+          owner,
+        };
+      });
+      ls.set('staredRepos', this.staredRepos);
     },
   },
 });

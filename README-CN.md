@@ -4,7 +4,7 @@
 
 这是一个用来管理你的github stars的网页工具，它通过标签来管理和分类你的stars。所有的数据保存在你自己的github gists.
 
-## Demo
+## [Demo](https://github-stars-manager-7oxg.vercel.app/#/dashboard)
 
 ![screen](screen/screen.png)
 

@@ -4,7 +4,7 @@ English | [中文](README-CN.md)
 
 This is a web tool designed to manage your GitHub stars. It uses tags to organize and categorize your starred repositories. All data is saved in your own GitHub Gists.
 
-## Demo
+## [Demo](https://github-stars-manager-7oxg.vercel.app/#/dashboard)
 
 ![screen](screen/screen.png)
 

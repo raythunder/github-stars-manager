@@ -13,7 +13,11 @@ import '@arco-design/web-vue/dist/arco.css';
 import '@/assets/style/global.less';
 import '@/api/interceptor';
 
+import VueVirtualScroller from 'vue-virtual-scroller';
+import 'vue-virtual-scroller/dist/vue-virtual-scroller.css';
+
 const app = createApp(App);
+app.use(VueVirtualScroller);
 
 app.use(ArcoVue, {});
 app.use(ArcoVueIcon);
