@@ -35,7 +35,7 @@ export default defineStore('data', {
     },
 
     async updateTags(tags) {
-      this.tags = tags;
+      this.tags = tags.filter((i) => i.name);
       this.updateTime = Date.now();
 
       ls.set('localContent', {
