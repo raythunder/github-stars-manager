@@ -3,6 +3,8 @@ import { starApi } from '@/api/star';
 import useDataStore from '../data';
 import intersection from 'lodash/intersection';
 
+const isDev = import.meta.env.DEV;
+
 export default defineStore('star', {
   state: () => ({
     loading: false,
@@ -74,7 +76,7 @@ export default defineStore('star', {
       let starredRepos = [];
       let page = 1;
       // eslint-disable-next-line no-constant-condition
-      if (true) {
+      if (isDev) {
         let list = await starApi.getList({ per_page: 30, page });
         while (page < 2) {
           // 将本页的标星仓库列表合并到总列表中
