@@ -98,7 +98,8 @@
       return;
     }
 
-    htmlData.value = replaceLinks(html);
+    // htmlData.value = replaceLinks(html);
+    htmlData.value = replaceImagesSrc(replaceLinks(html), repo);
     console.log(
       '%c [ htmlData.value ]-102',
       'font-size:13px; background:pink; color:#bf2c9f;',
@@ -125,6 +126,26 @@
 
     // 置顶默认分支
     branchList.value = [defaultBranch, ...extraBranch];
+  }
+
+  function replaceImagesSrc(htmlString, repo) {
+    // 匹配所有的 img 标签
+    const imgRegex = /<img[^>]*>/g;
+
+    // 匹配 img 标签中的 src 属性值
+    const srcRegex = /src\s*=\s*["']([^"']+)["']/;
+
+    // 替换 img 标签中的地址
+    const newHtmlString = htmlString.replace(imgRegex, (match) => {
+      const srcMatch = match.match(srcRegex);
+      if (srcMatch && !srcMatch[1].startsWith('http')) {
+        const newSrc = `src="https://raw.githubusercontent.com/${repo.owner.login}/${repo.name}/${branch.value}/${srcMatch[1]}"`;
+        return match.replace(srcRegex, newSrc);
+      }
+      return match;
+    });
+
+    return newHtmlString;
   }
 
   // 用正则表达式替换超链接
