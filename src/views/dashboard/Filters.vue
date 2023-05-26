@@ -2,7 +2,7 @@
   <div class="text-white">
     <div class="flex justify-between bg-gray-700 p-10 pb-2 shadow-inner">
       <a-space wrap class="custom-tag">
-        <span>标签：</span>
+        <span>{{ $t('tag') }}：</span>
 
         <a-tag
           :checked="filters.tags.includes(tag.name)"
@@ -19,7 +19,7 @@
         </a-tag>
 
         <a-tooltip
-          content="清空选择"
+          :content="$t('clear_selected')"
           position="bottom"
           background-color="#165DFF"
         >
@@ -31,7 +31,7 @@
         </a-tooltip>
 
         <a-tooltip
-          content="编辑标签"
+          :content="$t('edit_tag')"
           position="bottom"
           background-color="#165DFF"
         >
@@ -46,7 +46,7 @@
 
     <div class="bg-gray-600 p-10 pb-2">
       <a-space wrap class="custom-tag">
-        <span>语言：</span>
+        <span>{{ $t('language') }}：</span>
 
         <a-tag
           color="blue"
@@ -55,7 +55,7 @@
           :checked="filters.language === ''"
           :bordered="filters.language === ''"
         >
-          全部
+          {{ $t('all') }}
         </a-tag>
 
         <a-tag

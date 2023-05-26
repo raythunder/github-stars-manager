@@ -3,7 +3,7 @@
     <div class="p-20px shadow-lg">
       <a-input
         v-model="keywords"
-        placeholder="输入筛选仓库名或描述"
+        :placeholder="$t('input_name_or_description')"
         allow-clear
       />
     </div>
@@ -61,11 +61,11 @@
                   :loading="currentRepo.updating"
                   @click="handleSaveTag(repo)"
                 >
-                  保存
+                  {{ $t('save') }}
                 </a-button>
 
                 <a-button size="small" shape="round" @click="isEditing = false">
-                  取消
+                  {{ $t('cancel') }}
                 </a-button>
               </template>
 
@@ -92,7 +92,8 @@
                     <icon-tags v-if="repo._tags.length" />
                     <icon-tag v-else />
                   </template>
-                  {{ repo._tags.length ? '编辑' : '添加' }}标签
+                  {{ repo._tags.length ? $t('edit') : $t('add') }}
+                  {{ $t('tag') }}
                 </a-button>
               </div>
             </div>

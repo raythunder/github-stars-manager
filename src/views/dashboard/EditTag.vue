@@ -1,13 +1,13 @@
 <template>
   <a-modal
-    :title="title"
+    :title="$t('edit_tag')"
     v-model:visible="visible"
     @cancel="hide"
     @before-ok="handleSubmit"
     unmount-on-close
     width="80%"
   >
-    <a-alert class="mb-20">双击标签进行编辑</a-alert>
+    <a-alert class="mb-20">{{ $t('dbclick_edit') }}</a-alert>
     <draggable
       v-model="editData"
       group="people"
@@ -82,10 +82,6 @@
   );
 
   const emit = defineEmits(['update']);
-
-  const title = computed(() => {
-    return '编辑标签';
-  });
 
   const { visible, show, hide, handleSubmit } = useModal({
     emit,

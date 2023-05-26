@@ -6,8 +6,8 @@
     checked-value="or"
     unchecked-value="and"
   >
-    <template #checked> 包含任一标签 </template>
-    <template #unchecked> 同时包含多个 </template>
+    <template #checked> {{ $t('containing_any_tag') }} </template>
+    <template #unchecked> {{ $t('containing_multiple_tag') }} </template>
   </a-switch>
 </template>
 

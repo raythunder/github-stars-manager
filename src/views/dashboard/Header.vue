@@ -16,7 +16,7 @@
         v-if="starData.loading"
       >
         <starLoading :loading="starData.loading" class="mr-10"></starLoading>
-        <span>正在获取收藏列表...</span>
+        <span>{{ $t('fetchingData') }}</span>
       </div>
 
       <div
@@ -24,7 +24,7 @@
         class="flex items-center cursor-pointer"
         @click="starData.fetchStaredList(true)"
       >
-        <i class="i-ic-baseline-sync ml-20"></i> 同步最新收藏
+        <i class="i-ic-baseline-sync ml-20"></i> {{ $t('syncLatest') }}
       </div>
     </div>
 
@@ -35,16 +35,48 @@
         <a-radio :value="true">
           <template #radio="{ checked }">
             <a-tag color="blue" :checked="checked" checkable>
-              未标记的收藏
+              {{ $t('untaged') }}
             </a-tag>
           </template>
         </a-radio>
         <a-radio :value="false">
           <template #radio="{ checked }">
-            <a-tag color="blue" :checked="checked" checkable> 全部收藏 </a-tag>
+            <a-tag color="blue" :checked="checked" checkable>
+              {{ $t('all') }}
+            </a-tag>
           </template>
         </a-radio>
       </a-radio-group>
+
+      <div class="relative">
+        <a-tooltip :content="$t('settings.language')">
+          <a-button
+            class="nav-btn"
+            type="primary"
+            :shape="'circle'"
+            @click="setDropDownVisible"
+          >
+            <template #icon>
+              <icon-language />
+            </template>
+          </a-button>
+        </a-tooltip>
+        <a-dropdown trigger="click" @select="changeLocale">
+          <div ref="triggerBtn" class="trigger-btn"></div>
+          <template #content>
+            <a-doption
+              v-for="item in locales"
+              :key="item.value"
+              :value="item.value"
+            >
+              <template #icon>
+                <icon-check v-show="item.value === currentLocale" />
+              </template>
+              {{ item.label }}
+            </a-doption>
+          </template>
+        </a-dropdown>
+      </div>
     </a-space>
   </div>
 </template>
@@ -53,6 +85,8 @@
   import starLoading from '@/components/starLoading.vue';
   import { useUserStore, useDataStore, useStarStore } from '@/store';
   import TagFilterMode from '@/components/tagFilterMode.vue';
+  import useLocale from '@/hooks/locale';
+  import { LOCALE_OPTIONS } from '@/locale';
 
   const userInfo = useUserStore();
   const dataStore = useDataStore();
@@ -78,10 +112,32 @@
       dataStore.updateFilter('tags', []);
     }
   }
+
+  const locales = [...LOCALE_OPTIONS];
+
+  const { changeLocale, currentLocale } = useLocale();
+  const triggerBtn = ref();
+  const setDropDownVisible = () => {
+    const event = new MouseEvent('click', {
+      view: window,
+      bubbles: true,
+      cancelable: true,
+    });
+    triggerBtn.value.dispatchEvent(event);
+  };
 </script>
 
 <style lang="less" scoped>
   :deep .arco-radio-group .arco-radio {
     margin-right: 5px;
+  }
+
+  .trigger-btn,
+  .ref-btn {
+    position: absolute;
+    bottom: 14px;
+  }
+  .trigger-btn {
+    margin-left: 14px;
   }
 </style>

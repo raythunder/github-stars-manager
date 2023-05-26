@@ -3,7 +3,7 @@
     direction="vertical"
     class="p-10 min-h-full bg-gray-500 text-white w-full"
   >
-    <div> Topics </div>
+    <div> {{ $t('topics') }} </div>
 
     <a-space
       wrap
@@ -22,7 +22,7 @@
       </a-tag>
 
       <a-tooltip
-        content="清空选择"
+        :content="$t('clear_selected')"
         position="bottom"
         background-color="#165DFF"
       >
@@ -34,7 +34,7 @@
       </a-tooltip>
     </a-space>
 
-    <a-input placeholder="筛选主题" v-model="keyword" allow-clear />
+    <a-input :placeholder="$t('filter_topic')" v-model="keyword" allow-clear />
 
     <a-space wrap>
       <a-tag
